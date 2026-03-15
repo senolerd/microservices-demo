@@ -88,40 +88,42 @@ pipeline{
         }
 
 
-        stage("Test"){
-            // Automatic checks run to verify code quality, security vulnerabilities, and functional correctness (unit testing, SAST).
-            steps{}
-        }
+        // stage("Test"){
+        //     // Automatic checks run to verify code quality, security vulnerabilities, and functional correctness (unit testing, SAST).
+        //     steps{}
+        // }
 
-        stage("Package/Staging"){
-            // The build is packaged into a deployable format (e.g., a Docker image) and deployed to a staging environment that mirrors production.
-            steps{}
-        }
+        // stage("Package/Staging"){
+        //     // The build is packaged into a deployable format (e.g., a Docker image) and deployed to a staging environment that mirrors production.
+        //     steps{}
+        // }
 
-        stage("Acceptance/Dynamic Test"){
-            // Further testing, including integration or performance tests (DAST), is performed in the staging environment.
-            steps{}
-        }
+        // stage("Acceptance/Dynamic Test"){
+        //     // Further testing, including integration or performance tests (DAST), is performed in the staging environment.
+        //     steps{}
+        // }
 
-        stage("Deploy/Production"){
-            // The validated application is released to the production environment.
-            steps{}
-        }
+        // stage("Deploy/Production"){
+        //     // The validated application is released to the production environment.
+        //     steps{}
+        // }
 
     }
 }
 
 
 
-adservice
-cartservice
-checkoutservice
-currencyservice
-emailservice
-frontend
-loadgenerator
-paymentservice
-productcatalogservice
-recommendationservice
-shippingservice
-shoppingassistantservice
+
+
+// adservice
+// cartservice
+// checkoutservice
+// currencyservice
+// emailservice
+// frontend
+// loadgenerator
+// paymentservice
+// productcatalogservice
+// recommendationservice
+// shippingservice
+// shoppingassistantservice
