@@ -13,9 +13,9 @@ pipeline{
             steps{
                 dir('src/adservice'){
                     sh "ls -al"
+                    sh "chmod u+x ./gradlew"
+                    sh "./gradlew installDist"
                 }
-                // sh "chmod u+x ./gradlew"
-                // sh "./gradlew installDist"
             }
         }
 
