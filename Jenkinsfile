@@ -7,6 +7,7 @@ pipeline{
             // Source code is compiled, dependencies are resolved, and an executable artifact is created.
             steps{
                 sh "ls src/adservice"
+                sh "grade --version"
             }
         }
 
