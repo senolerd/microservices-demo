@@ -11,8 +11,7 @@ pipeline{
         stage("Build 01/12 Adservice"){
             // Source code is compiled, dependencies are resolved, and an executable artifact is created.
             steps{
-                script{
-                    sh "cd src/adservice"
+                dir('src/adservice'){
                     sh "ls -al"
                 }
                 // sh "chmod u+x ./gradlew"
