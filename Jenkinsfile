@@ -1,6 +1,8 @@
 pipeline{
     agent none;
-
+    environment{
+        JDK21_IMG= '    '
+    }
     // tools {
     //   gradle 'myGradle 9.5.0'
     // }
@@ -15,9 +17,10 @@ pipeline{
             }
             steps{
                 dir('src/adservice'){
-                    sh "ls -al"
-                    sh "chmod u+x ./gradlew"
-                    sh "./gradlew installDist"
+                    sh "docker build ./"
+                    // sh "ls -al"
+                    // sh "chmod u+x ./gradlew"
+                    // sh "./gradlew installDist"
                 }
             }
         }
