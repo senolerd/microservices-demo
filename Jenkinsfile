@@ -1,9 +1,9 @@
 pipeline{
     agent any;
 
-    tools {
-      gradle 'myGradle 9.5.0'
-    }
+    // tools {
+    //   gradle 'myGradle 9.5.0'
+    // }
 
 
     stages{
