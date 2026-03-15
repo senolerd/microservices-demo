@@ -12,7 +12,7 @@ pipeline{
             // Source code is compiled, dependencies are resolved, and an executable artifact is created.
             steps{
                 sh "cd src/adservice"
-                sh "gradle --version"
+                sh "chmod u+x ./gradlew"
                 sh "./gradlew installDist"
             }
         }
