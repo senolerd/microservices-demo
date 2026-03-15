@@ -12,9 +12,9 @@ pipeline{
 
         stage("Build 01/12 Adservice"){
             // Source code is compiled, dependencies are resolved, and an executable artifact is created.
-            agent{
-                docker { image 'docker.io/eclipse-temurin:21-jdk'}
-            }
+            // agent{
+            //     docker { image 'docker.io/eclipse-temurin:21-jdk'}
+            // }
             steps{
                 dir('src/adservice'){
                     sh "docker build ./"
