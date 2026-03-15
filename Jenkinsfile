@@ -13,6 +13,7 @@ pipeline{
             steps{
                 sh "ls src/adservice"
                 sh "gradle --version"
+                sh "./gradlew installDist"
             }
         }
 
