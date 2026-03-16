@@ -44,60 +44,87 @@ pipeline{
             }
         }
 
-        // stage("Build 04/12 Currencyservice"){
-        //     steps{
-        //         sh "ls src/currencyservice"
-        //     }
-        // }
+        stage("Build 04/12 Currencyservice"){
+            steps{
+                dir('src/currencyservice'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t currencyservice:$APP_VER ."
+                }
+            }
+        }
 
-        // stage("Build 05/12 emailservice"){
-        //     steps{
-        //         sh "ls src/emailservice"
-        //     }
-        // }
+        stage("Build 05/12 emailservice"){
+            steps{
+                dir('src/emailservice'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t emailservice:$APP_VER ."
+                }
+            }
+        }
 
-        // stage("Build 06/12 Frontend"){
-        //     steps{
-        //         sh "ls src/frontend"
-        //     }
-        // }
+        stage("Build 06/12 Frontend"){
+            steps{
+                dir('src/frontend'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t frontend:$APP_VER ."
+                }
+            }
+        }
 
-        // stage("Build 07/12 Loadgenerator"){
-        //     steps{
-        //         sh "ls src/loadgenerator"
-        //     }
-        // }
+        stage("Build 07/12 Loadgenerator"){
+            steps{
+                dir('src/loadgenerator'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t loadgenerator:$APP_VER ."
+                }
+            }
+        }
 
-        // stage("Build 08/12 Paymentservice"){
-        //     steps{
-        //         sh "ls src/paymentservice"
-        //     }
-        // }
+        stage("Build 08/12 Paymentservice"){
+            steps{
+                dir('src/paymentservice'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t paymentservice:$APP_VER ."
+                }
+            }
+        }
 
-        // stage("Build 09/12 Productcatalogservice"){
-        //     steps{
-        //         sh "ls src/productcatalogservice"
-        //     }
-        // }
+        stage("Build 09/12 Productcatalogservice"){
+            steps{
+                dir('src/productcatalogservice'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t productcatalogservice:$APP_VER ."
+                }
+            }
+        }
 
-        // stage("Build 10/12 Recommendationservice"){
-        //     steps{
-        //         sh "ls src/recommendationservice"
-        //     }
-        // }
+        stage("Build 10/12 Recommendationservice"){
+            steps{
+                dir('src/recommendationservice'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t recommendationservice:$APP_VER ."
+                }
+            }
+        }
 
-        // stage("Build 11/12 Shippingservice"){
-        //     steps{
-        //         sh "ls src/shippingservice"
-        //     }
-        // }
+        stage("Build 11/12 Shippingservice"){
+            steps{
+                dir('src/shippingservice'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t shippingservice:$APP_VER ."
+                }
+            }
+        }
 
-        // stage("Build 12/12 Shoppingassistantservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
-        //     steps{
-        //         sh "ls src/shoppingassistantservice"
-        //     }
-        // }
+        stage("Build 12/12 Shoppingassistantservice"){
+            // Source code is compiled, dependencies are resolved, and an executable artifact is created.
+            steps{
+                dir('src/shoppingassistantservice'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t shoppingassistantservice:$APP_VER ."
+                }
+            }
+        }
 
 
         ////////////////////////////////// 
