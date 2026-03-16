@@ -1,8 +1,7 @@
 pipeline{
     agent any;
     environment{
-        JDK21_IMG= ''
-        ADSERVICE_VER=""
+        ADSERVICE_VER="na"
     }
     // tools {
     //   gradle 'myGradle 9.5.0'
@@ -22,9 +21,7 @@ pipeline{
                             returnStdout: true
                             ).trim()
                     }
-                    sh "echo ADSERVICE VERSION VAR AFTER DOLARER $ADSERVICE_VER"
-                    // sh "echo ADSERVICE VERSION VAR AFTER DOLARES IN IN CURLY ${ADSERVICE_VER}"
-                    // sh "docker build ./"
+                    sh "docker -t adservice:$ADSERVICE_VER build ./"
                 }
             }
         }
