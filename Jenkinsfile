@@ -35,11 +35,14 @@ pipeline{
             }
         }
 
-        // stage("Build 03/12 Checkoutservice"){
-        //     steps{
-        //         sh "ls src/checkoutservice"
-        //     }
-        // }
+        stage("Build 03/12 Checkoutservice"){
+            steps{
+                dir('src/checkoutservice'){
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                    sh "docker build -t checkoutservice:$APP_VER ."
+                }
+            }
+        }
 
         // stage("Build 04/12 Currencyservice"){
         //     steps{
