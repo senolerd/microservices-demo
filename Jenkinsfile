@@ -30,8 +30,8 @@ pipeline{
         stage("Build 02/12 Cartservice"){
             // Source code is compiled, dependencies are resolved, and an executable artifact is created.
             steps{
-                dir('src/adservice'){
-                    sh "docker build -t adservice:$APP_VER ."
+                dir('src/cartservice/src'){
+                    sh "docker build -t cartservice:$APP_VER ."
                 }
             }
         }
