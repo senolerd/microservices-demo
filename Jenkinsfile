@@ -17,7 +17,7 @@ pipeline{
                     script{
                         sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile;fi'
                         def ADSERVICE_VER = sh( 
-                            script: './gradlew -q printVersion'.
+                            script: './gradlew -q printVersion',
                             returnStdout: true
                             ).trim()
                         echo "ADSERVICE VERSION VAR AFTER DOLARER $ADSERVICE_VER"
