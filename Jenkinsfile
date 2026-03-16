@@ -1,7 +1,8 @@
 pipeline{
     agent any;
     environment{
-        ADSERVICE_VER = "na"
+        // hard coded version? eww!
+        APP_VER = "v0.10.5"
     }
     // tools {
     //   gradle 'myGradle 9.5.0'
@@ -16,12 +17,12 @@ pipeline{
                     // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
                     script{
                         sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile;fi'
-                        ADSERVICE_VER = sh( 
-                            script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
-                            returnStdout: true
-                            ).trim()
+                        // ADSERVICE_VER = sh( 
+                        //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                        //     returnStdout: true
+                        //     ).trim()
                     }
-                    sh "docker build -t adservice:$ADSERVICE_VER ."
+                    sh "docker build -t adservice:$APP_VER ."
                 }
             }
         }
@@ -30,7 +31,7 @@ pipeline{
             // Source code is compiled, dependencies are resolved, and an executable artifact is created.
             steps{
                 dir('src/adservice'){
-                sh "git ls-remote --tags origin"
+                    sh "docker build -t adservice:$APP_VER ."
                 }
             }
         }
