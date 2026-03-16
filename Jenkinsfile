@@ -1,7 +1,7 @@
 pipeline{
     agent any;
     environment{
-        JDK21_IMG= '    '
+        JDK21_IMG= ''
     }
     // tools {
     //   gradle 'myGradle 9.5.0'
@@ -16,18 +16,15 @@ pipeline{
                     // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
                     script{
                         sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile;fi'
-                        
-                        
-
-
-
                         def ADSERVICE_VER = sh( 
                             script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
                             returnStdout: true
                             ).trim()
-                        echo "ADSERVICE VERSION VAR AFTER DOLARER $ADSERVICE_VER"
-                        echo "ADSERVICE VERSION VAR AFTER DOLARES IN IN CURLY ${ADSERVICE_VER}"
+                        
+                        
                     }
+                    sh "echo ADSERVICE VERSION VAR AFTER DOLARER $ADSERVICE_VER"
+                    sh "echo ADSERVICE VERSION VAR AFTER DOLARES IN IN CURLY ${ADSERVICE_VER}"
                     // sh "docker build ./"
                 }
             }
