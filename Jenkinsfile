@@ -27,7 +27,6 @@ pipeline{
         }
 
         stage("Build 02/12 Cartservice"){
-            // Source code is compiled, dependencies are resolved, and an executable artifact is created.
             steps{
                 dir('src/cartservice/src'){
                     sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
@@ -37,63 +36,54 @@ pipeline{
         }
 
         // stage("Build 03/12 Checkoutservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/checkoutservice"
         //     }
         // }
 
         // stage("Build 04/12 Currencyservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/currencyservice"
         //     }
         // }
 
         // stage("Build 05/12 emailservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/emailservice"
         //     }
         // }
 
         // stage("Build 06/12 Frontend"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/frontend"
         //     }
         // }
 
         // stage("Build 07/12 Loadgenerator"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/loadgenerator"
         //     }
         // }
 
         // stage("Build 08/12 Paymentservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/paymentservice"
         //     }
         // }
 
         // stage("Build 09/12 Productcatalogservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/productcatalogservice"
         //     }
         // }
 
         // stage("Build 10/12 Recommendationservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/recommendationservice"
         //     }
         // }
 
         // stage("Build 11/12 Shippingservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
         //     steps{
         //         sh "ls src/shippingservice"
         //     }
@@ -107,6 +97,7 @@ pipeline{
         // }
 
 
+        ////////////////////////////////// 
         // stage("Test"){
         //     // Automatic checks run to verify code quality, security vulnerabilities, and functional correctness (unit testing, SAST).
         //     steps{}
