@@ -11,17 +11,19 @@ pipeline{
     stages{
 
         stage("Build 01/12 Adservice"){
-            // Source code is compiled, dependencies are resolved, and an executable artifact is created.
-            // agent{
-            //     docker { image 'docker.io/eclipse-temurin:21-jdk'}
-            // }
             steps{
                 dir('src/adservice'){
-                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile;fi'
-                    sh "docker build ./"
-                    // sh "ls -al"
-                    // sh "chmod u+x ./gradlew"
-                    // sh "./gradlew installDist"
+                    // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                    script{
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile;fi'
+                        def ADSERVICE_VER = sh( 
+                            script: './gradlew -q printVersion'.
+                            returnStdout: true
+                            ).trim()
+                        echo "ADSERVICE VERSION VAR AFTER DOLARER $ADSERVICE_VER"
+                        echo "ADSERVICE VERSION VAR AFTER DOLARES IN IN CURLY ${ADSERVICE_VER}"
+                    }
+                    // sh "docker build ./"
                 }
             }
         }
