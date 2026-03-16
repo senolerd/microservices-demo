@@ -23,8 +23,8 @@ pipeline{
                         
                         
                     }
-                    sh "echo ADSERVICE VERSION VAR AFTER DOLARER $ADSERVICE_VER"
-                    // sh "echo ADSERVICE VERSION VAR AFTER DOLARES IN IN CURLY ${ADSERVICE_VER}"
+                    // sh "echo ADSERVICE VERSION VAR AFTER DOLARER $ADSERVICE_VER"
+                    sh "echo ADSERVICE VERSION VAR AFTER DOLARES IN IN CURLY ${ADSERVICE_VER}"
                     // sh "docker build ./"
                 }
             }
