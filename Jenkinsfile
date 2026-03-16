@@ -1,7 +1,7 @@
 pipeline{
     agent any;
     environment{
-        ADSERVICE_VER="na"
+        ADSERVICE_VER = "na"
     }
     // tools {
     //   gradle 'myGradle 9.5.0'
@@ -26,12 +26,14 @@ pipeline{
             }
         }
 
-        // stage("Build 02/12 Cartservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
-        //     steps{
-        //         sh "ls src/cartservice"
-        //     }
-        // }
+        stage("Build 02/12 Cartservice"){
+            // Source code is compiled, dependencies are resolved, and an executable artifact is created.
+            steps{
+                dir('src/adservice'){
+                sh "git ls-remote --tags origin"
+                }
+            }
+        }
 
         // stage("Build 03/12 Checkoutservice"){
         //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
