@@ -17,7 +17,7 @@ pipeline{
             // }
             steps{
                 dir('src/adservice'){
-                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile'
+                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile;fi'
                     sh "docker build ./"
                     // sh "ls -al"
                     // sh "chmod u+x ./gradlew"
