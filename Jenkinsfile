@@ -21,7 +21,7 @@ pipeline{
                             returnStdout: true
                             ).trim()
                     }
-                    sh "docker -t adservice:$ADSERVICE_VER build ./"
+                    sh "docker build -t adservice:$ADSERVICE_VER ."
                 }
             }
         }
