@@ -22,7 +22,7 @@ pipeline{
 
 
                         def ADSERVICE_VER = sh( 
-                            script: "cat build.gradle |grep ^version|awk -F= {'print $2'}",
+                            script: "cat build.gradle |grep ^version|awk -F= {'print ${2}'}",
                             returnStdout: true
                             ).trim()
                         echo "ADSERVICE VERSION VAR AFTER DOLARER $ADSERVICE_VER"
