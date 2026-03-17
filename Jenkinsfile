@@ -17,7 +17,7 @@ pipeline{
         stage("Build 01/12 Adservice"){
             steps{
                 dir('src/adservice'){
-                    API_NAME = "adservice"
+                    def API_NAME = "adservice"
                     // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
                     sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
                         // ADSERVICE_VER = sh( 
