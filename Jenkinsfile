@@ -16,21 +16,25 @@ pipeline{
 
         stage("Build 01/12 Adservice"){
             steps{
-                dir('src/adservice'){
-                    def API_NAME = "adservice"
-                    // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
-                    sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-                        // ADSERVICE_VER = sh( 
-                        //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
-                        //     returnStdout: true
-                        //     ).trim()
-                    
-                    sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
+                script{
+                    dir('src/adservice'){
+                        def API_NAME = "adservice"
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
 
-                    // AWS Upload
-                    sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
-                    sh "if ! aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then  ;fi"
-                    sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if ! aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then  ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                }
+
+
                 }
             }
         }
