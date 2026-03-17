@@ -17,8 +17,9 @@ pipeline{
         stage("Build 01/12 Adservice"){
             steps{
                 script{
-                    dir('src/adservice'){
-                        def API_NAME = "adservice"
+                    def API_NAME = "adservice"
+                    dir("src/$API_NAME"){
+                        
                         // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
                         sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
                             // ADSERVICE_VER = sh( 
@@ -30,11 +31,9 @@ pipeline{
 
                         // AWS Upload
                         sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
-                        sh "if ! aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
                         sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
-                }
-
-
+                    }
                 }
             }
         }
