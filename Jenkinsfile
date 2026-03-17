@@ -30,7 +30,7 @@ pipeline{
 
                         // AWS Upload
                         sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
-                        sh "if ! aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then  ;fi"
+                        sh "if ! aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
                         sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
                 }
 
