@@ -86,87 +86,223 @@ pipeline{
             }
         }
 
-        // stage("Build 04/12 Currencyservice"){
-        //     steps{
-        //         dir('src/currencyservice'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t currencyservice:$APP_VER ."
-        //         }
-        //     }
-        // }
+        stage("Build 04/12 Currencyservice"){
+            steps{
+                script{
+                    def API_NAME = "currencyservice"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
 
-        // stage("Build 05/12 emailservice"){
-        //     steps{
-        //         dir('src/emailservice'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t emailservice:$APP_VER ."
-        //         }
-        //     }
-        // }
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
 
-        // stage("Build 06/12 Frontend"){
-        //     steps{
-        //         dir('src/frontend'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t frontend:$APP_VER ."
-        //         }
-        //     }
-        // }
+        stage("Build 05/12 emailservice"){
+            steps{
+                script{
+                    def API_NAME = "emailservice"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
 
-        // stage("Build 07/12 Loadgenerator"){
-        //     steps{
-        //         dir('src/loadgenerator'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t loadgenerator:$APP_VER ."
-        //         }
-        //     }
-        // }
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
 
-        // stage("Build 08/12 Paymentservice"){
-        //     steps{
-        //         dir('src/paymentservice'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t paymentservice:$APP_VER ."
-        //         }
-        //     }
-        // }
+        stage("Build 06/12 Frontend"){
+            steps{
 
-        // stage("Build 09/12 Productcatalogservice"){
-        //     steps{
-        //         dir('src/productcatalogservice'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t productcatalogservice:$APP_VER ."
-        //         }
-        //     }
-        // }
+                script{
+                    def API_NAME = "frontend"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
 
-        // stage("Build 10/12 Recommendationservice"){
-        //     steps{
-        //         dir('src/recommendationservice'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t recommendationservice:$APP_VER ."
-        //         }
-        //     }
-        // }
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
 
-        // stage("Build 11/12 Shippingservice"){
-        //     steps{
-        //         dir('src/shippingservice'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t shippingservice:$APP_VER ."
-        //         }
-        //     }
-        // }
+        stage("Build 07/12 Loadgenerator"){
+            steps{
+                script{
+                    def API_NAME = "loadgenerator"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
 
-        // stage("Build 12/12 Shoppingassistantservice"){
-        //     // Source code is compiled, dependencies are resolved, and an executable artifact is created.
-        //     steps{
-        //         dir('src/shoppingassistantservice'){
-        //             sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //             sh "docker build -t shoppingassistantservice:$APP_VER ."
-        //         }
-        //     }
-        // }
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
+
+        stage("Build 08/12 Paymentservice"){
+            steps{
+                script{
+                    def API_NAME = "paymentservice"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
+
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
+
+        stage("Build 09/12 Productcatalogservice"){
+            steps{
+                script{
+                    def API_NAME = "productcatalogservice"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
+
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
+
+        stage("Build 10/12 Recommendationservice"){
+            steps{
+                script{
+                    def API_NAME = "recommendationservice"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
+
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
+
+        stage("Build 11/12 Shippingservice"){
+            steps{
+                script{
+                    def API_NAME = "shippingservice"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
+
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
+
+        stage("Build 12/12 Shoppingassistantservice"){
+            // Source code is compiled, dependencies are resolved, and an executable artifact is created.
+            steps{
+                script{
+                    def API_NAME = "shoppingassistantservice"
+                    dir("src/$API_NAME"){
+                        
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
+
+                        // AWS Upload
+                        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
+            }
+        }
 
 
         ////////////////////////////////// 
