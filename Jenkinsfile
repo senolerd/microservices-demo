@@ -1,3 +1,4 @@
+def utils
 pipeline{
     agent any;
     environment{
@@ -17,7 +18,7 @@ pipeline{
             steps{
                 echo "####### INITIAL STAGE STARTED ########"
                 script{
-                    def utils = load "var/utils.groovy"
+                    utils = load "var/utils.groovy"
                     utils.say_hello("Jello from __init__") 
                 }
                 echo "####### INITIAL STAGE ENDS ########"
