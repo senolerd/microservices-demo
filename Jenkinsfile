@@ -1,13 +1,14 @@
 def utils
 pipeline{
     agent any;
-    environment{
+    // environment{
         // hard coded version? eww!
         // APP_VER = "v0.10.5"
         // ECR_PROFILE = "ecr-user"
         // ECR_REGION = "us-east-1"
         // ECR_ADDR = "823899318117.dkr.ecr.us-east-1.amazonaws.com"
-    }
+    // }
+
     // tools {
     //   gradle 'myGradle 9.5.0'
     // }
