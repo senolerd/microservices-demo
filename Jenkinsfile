@@ -19,7 +19,7 @@ pipeline{
                 echo "####### INITIAL STAGE STARTED ########"
                 script{
                     utils = load "var/utils.groovy"
-                    utils.say_hello("Jello from __init__") 
+                    utils.say_hello(message: "Jello from __init__") 
                 }
                 echo "####### INITIAL STAGE ENDS ########"
             }
@@ -27,7 +27,7 @@ pipeline{
 
         stage("Test stage") {
             steps{
-                script{utils.say_hello("Jello from Test Stage")}
+                script{utils.say_hello(message: "Jello from Test Stage")}
             }
         }
 
