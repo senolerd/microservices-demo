@@ -16,15 +16,17 @@ pipeline{
         stage("__init__") {
             steps{
                 echo "####### INITIAL STAGE STARTED ########"
-                script{def utils = load "var/utils.groovy"}
-                utils.say_hello("Jello from __init__") 
+                script{
+                    def utils = load "var/utils.groovy"
+                    utils.say_hello("Jello from __init__") 
+                }
                 echo "####### INITIAL STAGE ENDS ########"
             }
         }
 
         stage("Test stage") {
             steps{
-                utils.say_hello("Jello from Test Stage")
+                script{utils.say_hello("Jello from Test Stage")}
             }
         }
 
