@@ -1,4 +1,3 @@
-@Library("test") _
 pipeline{
     agent any;
     environment{
