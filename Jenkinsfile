@@ -23,7 +23,7 @@ pipeline{
         stage("Build 01/12 Adservice"){
             steps{
                 script{
-                    def API_NAME = "adservice"
+                    API_NAME = "adservice"
                     dir("src/$API_NAME"){
                         utils.runtimeCheck()
                         utils.apiBuild()

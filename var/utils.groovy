@@ -22,6 +22,7 @@ def runtimeCheck(){
     // checks only if Podman is installed.
 
     sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+    sh "cat Dockerfile"
 }
 
 def apiBuild(){
