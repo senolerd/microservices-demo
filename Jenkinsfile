@@ -15,7 +15,7 @@ pipeline{
         stage("__init__") {
             steps{
                 script{
-                    config = load "var/config.groovy"
+                    // config = load "var/config.groovy"
                     utils = load "var/utils.groovy"
                 }
             }
