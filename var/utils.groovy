@@ -5,8 +5,8 @@
 REPO_ADDR = "823899318117.dkr.ecr.us-east-1.amazonaws.com"
 
 // ## AWS repo settings 
-def ECR_PROFILE = "ecr-user"
-def ECR_REGION = "us-east-1"
+ECR_PROFILE = "ecr-user"
+ECR_REGION = "us-east-1"
 
 // NEXUS repo settings
 
