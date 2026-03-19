@@ -1,61 +1,51 @@
 def utils
+def config
 pipeline{
     agent any;
-    // environment{
-        // hard coded version? eww!
-        // APP_VER = "v0.10.5"
-        // ECR_PROFILE = "ecr-user"
-        // ECR_REGION = "us-east-1"
-        // ECR_ADDR = "823899318117.dkr.ecr.us-east-1.amazonaws.com"
-    // }
-
-    // tools {
-    //   gradle 'myGradle 9.5.0'
-    // }
+    environment{
+        // hard coded Version? eww?!
+        APP_VER = "v0.10.5"
+        ECR_PROFILE = "ecr-user"
+        ECR_REGION = "us-east-1"
+        ECR_ADDR = "823899318117.dkr.ecr.us-east-1.amazonaws.com"
+    }
 
 
     stages{
         stage("__init__") {
             steps{
-                echo "####### INITIAL STAGE STARTED ########"
                 script{
+                    config = load "var/config.groovy"
                     utils = load "var/utils.groovy"
-                    utils.say_hello(second: "Me second in __init__", message: "Jello from __init__") 
                 }
-                echo "####### INITIAL STAGE ENDS ########"
             }
         }
 
-        stage("Test stage") {
+        stage("Build 01/12 Adservice"){
             steps{
-                script{utils.say_hello(second: "Me second in test", message: "Jello from Test Stage")}
-                echo "PROFILE: $ECR_PROFILE"
+                script{
+                    def API_NAME = "adservice"
+                    dir("src/$API_NAME"){
+                        utils.runtimeCheck()
+                        utils.apiBuild()
+                        utils.pushImage("AWS")
+                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
+                        // sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
+                            // ADSERVICE_VER = sh( 
+                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
+                            //     returnStdout: true
+                            //     ).trim()
+                        
+                        // sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
+
+                        // AWS Upload
+                        // sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
+                        // sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
+                        // sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
+                    }
+                }
             }
         }
-
-        // stage("Build 01/12 Adservice"){
-        //     steps{
-        //         script{
-        //             def API_NAME = "adservice"
-        //             dir("src/$API_NAME"){
-                        
-        //                 // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
-        //                 sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //                     // ADSERVICE_VER = sh( 
-        //                     //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
-        //                     //     returnStdout: true
-        //                     //     ).trim()
-                        
-        //                 sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
-
-        //                 // AWS Upload
-        //                 sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
-        //                 sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
-        //                 sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
-        //             }
-        //         }
-        //     }
-        // }
 
         // stage("Build 02/12 Cartservice"){
         //     steps{
