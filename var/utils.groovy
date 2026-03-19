@@ -2,7 +2,7 @@
 // is used this way. 
 
 // # REPO SETTINGS
-def REPO_ADDR = "823899318117.dkr.ecr.us-east-1.amazonaws.com"
+REPO_ADDR = "823899318117.dkr.ecr.us-east-1.amazonaws.com"
 
 // ## AWS repo settings 
 def ECR_PROFILE = "ecr-user"
