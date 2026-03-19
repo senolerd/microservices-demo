@@ -2,11 +2,11 @@
 // is used this way. 
 
 // # REPO SETTINGS
-REPO_ADDR = "823899318117.dkr.ecr.us-east-1.amazonaws.com"
+def REPO_ADDR = "823899318117.dkr.ecr.us-east-1.amazonaws.com"
 
 // ## AWS repo settings 
-ECR_PROFILE = "ecr-user"
-ECR_REGION = "us-east-1"
+def ECR_PROFILE = "ecr-user"
+def ECR_REGION = "us-east-1"
 
 // NEXUS repo settings
 
