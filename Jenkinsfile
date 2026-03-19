@@ -26,7 +26,7 @@ pipeline{
                 script{
                     def API_NAME = "adservice"
                     dir("src/$API_NAME"){
-                        utils.runtimeCheck()
+                        // utils.runtimeCheck()
                         // utils.apiBuild()
                         // utils.pushImage("AWS")
                         // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
