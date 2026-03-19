@@ -10,10 +10,10 @@ ECR_REGION = "us-east-1"
 
 // NEXUS repo settings
 
-
 def say_hello(Map config){
     echo "Hello from var/utils/say_hello with a message ${config.message} second: ${config.second} App Ver: ${APP_VER}"
 }
+
 
 def runtimeCheck(){
     // Dockerfile is specialized for new version of Docker runtime by BUILDPLATFORM with a value. 
@@ -25,12 +25,11 @@ def runtimeCheck(){
     sh "cat Dockerfile"
 }
 
+
 def apiBuild(){
     // If the runtime is Podman, it is better to install podman-docker package to translate Docker commands for Podman
     sh "docker build -t ${REPO_ADDR}/${API_NAME}:${APP_VER} ."
 }
-
-
 
 
 def pushImage(String targetRepo){

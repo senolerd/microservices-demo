@@ -28,47 +28,23 @@ pipeline{
                         utils.runtimeCheck()
                         utils.apiBuild()
                         utils.pushImage("AWS")
-                        // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
-                        // sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-                            // ADSERVICE_VER = sh( 
-                            //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
-                            //     returnStdout: true
-                            //     ).trim()
-                        
-                        // sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
-
-                        // AWS Upload
-                        // sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
-                        // sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
-                        // sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
                     }
                 }
             }
         }
 
-        // stage("Build 02/12 Cartservice"){
-        //     steps{
-        //         script{
-        //             def API_NAME = "cartservice"
-        //             dir("src/$API_NAME/src"){
-                        
-        //                 // Podman/Buildah or older Docker versions) treat BUILDPLATFORM as redefining a reserved argument, which triggers the error.
-        //                 sh 'if rpm -q podman; then sed -i "s*ARG BUILDPLATFORM=linux/amd64*ARG BUILDPLATFORM*" Dockerfile; fi'
-        //                     // ADSERVICE_VER = sh( 
-        //                     //     script: "cat build.gradle | grep ^version|awk -F= {'print \$2'}",
-        //                     //     returnStdout: true
-        //                     //     ).trim()
-                        
-        //                 sh "docker build -t $ECR_ADDR/$API_NAME:$APP_VER ."
-
-        //                 // AWS Upload
-        //                 sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_ADDR"
-        //                 sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
-        //                 sh "docker push $ECR_ADDR/$API_NAME:$APP_VER"
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Build 02/12 Cartservice"){
+            steps{
+                script{
+                    def API_NAME = "cartservice"
+                    dir("src/$API_NAME/src"){
+                        utils.runtimeCheck()
+                        utils.apiBuild()
+                        utils.pushImage("AWS")
+                    }
+                }
+            }
+        }
 
         // stage("Build 03/12 Checkoutservice"){
         //     steps{
