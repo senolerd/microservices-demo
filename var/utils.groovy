@@ -26,7 +26,7 @@ def runtimeCheck(){
 
 def apiBuild(){
     // If the runtime is Podman, it is better to install podman-docker package to translate Docker commands for Podman
-    sh "docker build -t $REPO_ADDR/$API_NAME:$APP_VER ."
+    sh "docker build -t ${REPO_ADDR}/${API_NAME}:${APP_VER} ."
 }
 
 
@@ -39,9 +39,9 @@ def pushImage(String targetRepo){
     if (targetRepo == "AWS") {
         echo "LOGIN AND PUSH TO AWS"
         // If the target repo is going to be AWS, the connection profile sould be configured on every node(s) with [ecr-user] 
-        sh "aws ecr get-login-password --profile $ECR_PROFILE --region $ECR_REGION | docker login --username AWS --password-stdin $REPO_ADDR"
-        sh "if aws ecr create-repository --profile=ecr-user --repository-name $API_NAME 2> /dev/null; then echo $API_NAME remote repo is created ;fi"
-        sh "docker push $REPO_ADDR/$API_NAME:$APP_VER"
+        sh "aws ecr get-login-password --profile ${ECR_PROFILE} --region ${ECR_REGION} | docker login --username AWS --password-stdin ${REPO_ADDR}"
+        sh "if aws ecr create-repository --profile=ecr-user --repository-name ${API_NAME} 2> /dev/null; then echo ${API_NAME} remote repo is created ;fi"
+        sh "docker push ${REPO_ADDR}/${API_NAME}:${APP_VER}"
     }
 }
 
